@@ -22,5 +22,16 @@ rl.question("Enter commit message: ", (message) => {
       }
       rl.close();
     });
+
+    exec("git push -u origin master", (err, stdout, stderr) => {
+      if (err) {
+        console.error(`Error pushing files: ${stderr}`);
+        rl.close();
+        return;
+      }
+
+      console.log("Files pushed successfully.");
+      rl.close();
+    });
   });
 });
