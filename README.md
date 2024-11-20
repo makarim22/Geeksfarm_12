@@ -1,6 +1,6 @@
 # GeeksfarmBatch12Code
 
-Selamat datang di repository **GeeksfarmBatch12Code**! Ini adalah tempat di mana saya akan membagikan hasil tugas dan proyek selama pelatihan **Geeksfarm Batch 12**. Repository ini mencakup berbagai tugas, latihan, dan proyek yang saya kerjakan dalam rangka memperdalam pemahaman tentang pengembangan web menggunakan teknologi seperti **Node.js**, **React.js**, dan berbagai alat terkait lainnya.
+Selamat datang di repository **GeeksfarmBatch12Code**! Ini adalah tempat di mana saya akan membagikan hasil tugas dan proyek selama pelatihan **Geeksfarm Batch 12**. Repository ini mencakup berbagai tugas, latihan, dan proyek yang saya kerjakan dalam rangka memperdalam pemahaman tentang pengembangan web menggunakan teknologi seperti **Node.js**, **Express.js**, dan berbagai alat terkait lainnya.
 
 ## Teknologi yang Digunakan
 
