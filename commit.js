@@ -32,7 +32,7 @@ rl.question("Enter commit message: ", (message) => {
     });
 
     // Menjalankan perintah 'git push -u origin master' untuk mendorong commit ke repository remote
-    exec("git push -u origin master", (err, stdout, stderr) => {
+    exec("git push", (err, stdout, stderr) => {
       if (err) {
         // Jika terjadi kesalahan saat menjalankan 'git push', cetak pesan kesalahan dan tutup antarmuka readline
         console.error(`Error pushing files: ${stderr}`);
