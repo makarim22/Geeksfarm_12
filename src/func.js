@@ -31,21 +31,15 @@ const question = (questions) => {
   });
 };
 
-const main = async () => {
-  const name = await question("Your name: ");
-  const mobile = await question("Your mobile: ");
-  const email = await question("Your email: ");
-
-  const contact = {
-    name,
-    mobile,
-    email,
-  };
-
+const addContact = async (contact) => {
   const contacts = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
   contacts.push(contact);
-  fs.writeFileSync(dataPath, JSON.stringify(contacts));
-  rl.close();
+  saveContacts(contacts);
 };
 
-main();
+const saveContacts = (contacts) => {
+  fs.writeFileSync(dataPath, JSON.stringify(contacts));
+  console.log("data added successfully!");
+};
+
+module.exports = { question, addContact, rl };

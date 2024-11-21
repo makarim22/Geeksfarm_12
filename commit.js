@@ -7,44 +7,56 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-// Menanyakan pesan commit kepada pengguna
-rl.question("Enter commit message: ", (message) => {
-  // Menjalankan perintah 'git add .' untuk menambahkan semua perubahan ke staging area
-  exec("git add .", (err, stdout, stderr) => {
+let filesToAdd = [];
+
+// Fungsi untuk menanyakan file apa saja yang akan ditambahkan ke staging area
+function askForFiles() {
+  rl.question(
+    "Enter files to add (use 'end' to finish, '.' to add all files): ",
+    (files) => {
+      if (files.trim() === "end") {
+        // Jika pengguna mengetik 'end', lanjutkan ke langkah berikutnya
+        const addCommand = filesToAdd.includes(".")
+          ? "git add ."
+          : `git add ${filesToAdd.join(" ")}`;
+        execAddCommand(addCommand);
+      } else {
+        // Tambahkan file ke daftar filesToAdd
+        filesToAdd.push(files.trim());
+        // Tanyakan lagi
+        askForFiles();
+      }
+    }
+  );
+}
+
+// Fungsi untuk menjalankan perintah 'git add'
+function execAddCommand(addCommand) {
+  exec(addCommand, (err, stdout, stderr) => {
     if (err) {
-      // Jika terjadi kesalahan saat menjalankan 'git add .', cetak pesan kesalahan dan tutup antarmuka readline
+      // Jika terjadi kesalahan saat menjalankan 'git add', cetak pesan kesalahan dan tutup antarmuka readline
       console.error(`Error adding files: ${stderr}`);
       rl.close();
       return;
     }
 
-    // Menjalankan perintah 'git commit -m "<message>"' untuk membuat commit dengan pesan yang diberikan
-    exec(`git commit -m "${message}"`, (err, stdout, stderr) => {
-      if (err) {
-        // Jika terjadi kesalahan saat menjalankan 'git commit', cetak pesan kesalahan
-        console.error(`Error committing files: ${stderr}`);
-      } else {
-        // Jika commit berhasil, cetak pesan sukses
-        console.log("Files committed successfully.");
-      }
-      // Tutup antarmuka readline
-      rl.close();
-    });
-
-    // Menjalankan perintah 'git push -u origin master' untuk mendorong commit ke repository remote
-    exec("git push", (err, stdout, stderr) => {
-      if (err) {
-        // Jika terjadi kesalahan saat menjalankan 'git push', cetak pesan kesalahan dan tutup antarmuka readline
-        console.error(`Error pushing files: ${stderr}`);
+    // Menanyakan pesan commit kepada pengguna
+    rl.question("Enter commit message: ", (message) => {
+      // Menjalankan perintah 'git commit -m "<message>"' untuk membuat commit dengan pesan yang diberikan
+      exec(`git commit -m "${message}"`, (err, stdout, stderr) => {
+        if (err) {
+          // Jika terjadi kesalahan saat menjalankan 'git commit', cetak pesan kesalahan
+          console.error(`Error committing files: ${stderr}`);
+        } else {
+          // Jika commit berhasil, cetak pesan sukses
+          console.log("Files committed successfully.");
+        }
+        // Tutup antarmuka readline
         rl.close();
-        return;
-      } else {
-        // Jika push berhasil, cetak pesan sukses
-        console.log("Files pushed successfully.");
-      }
-
-      // Tutup antarmuka readline
-      rl.close();
+      });
     });
   });
-});
+}
+
+// Mulai dengan menanyakan file apa saja yang akan ditambahkan ke staging area
+askForFiles();
