@@ -25,18 +25,22 @@ rl.question("Your name: ", (name) => {
       );
       console.log(`Email : ${email} (${isEmailValid ? "Valid" : "Invalid"})`);
 
+      // Membuat objek contact dengan informasi yang diberikan oleh pengguna
       const contact = {
         name,
         mobile,
         email,
       };
 
+      // Membaca file contacts.json dan menguraikan isinya menjadi array
       const contacts = JSON.parse(
         fs.readFileSync("data/contacts.json", "utf-8")
       );
 
+      // Menambahkan objek contact baru ke dalam array contacts
       contacts.push(contact);
 
+      // Menulis kembali array contacts yang telah diperbarui ke dalam file contacts.json
       fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
 
       // Menutup antarmuka readline
