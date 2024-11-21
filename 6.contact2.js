@@ -1,12 +1,29 @@
 const readline = require("readline"); // Import modul 'readline' untuk membaca input dari pengguna
 const validator = require("validator"); // Import modul 'validator' untuk validasi
 const fs = require("fs"); // Import modul 'fs' untuk operasi file
+const { resolve } = require("path");
+const { rejects } = require("assert");
+const dirPath = "./data"; // Menyimpan path direktori data
+const dataPath = "./data/contacts.json"; // Menyimpan path file contacts.json
 
 // Membuat antarmuka readline untuk membaca input dari stdin dan menulis output ke stdout
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+//membuat folder data apabila tidak ada
+if (!fs.existsSync(dirPath)) {
+  fs.mkdirSync(dirPath);
+}
+
+// membuat file contacts.json apabila tidak ada
+if (!fs.existsSync(dataPath)) {
+  fs.writeFileSync(dataPath, "[]", "utf-8");
+  // fs.writeFile("./data/contacts.json", "[]", "utf-8", (err) => {
+  //   if (err) throw err;
+  // });
+}
 
 // Menanyakan nama kepada pengguna
 rl.question("Your name: ", (name) => {
@@ -36,15 +53,12 @@ rl.question("Your name: ", (name) => {
       const contacts = JSON.parse(
         fs.readFileSync("data/contacts.json", "utf-8")
       );
-      console.log(contacts);
 
       // Menambahkan objek contact baru ke dalam array contacts
       contacts.push(contact);
-      console.log(2);
 
       // Menulis kembali array contacts yang telah diperbarui ke dalam file contacts.json
       fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
-      console.log(3);
 
       // Menutup antarmuka readline
       rl.close();
