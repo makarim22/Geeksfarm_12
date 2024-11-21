@@ -38,10 +38,11 @@ rl.question("Enter commit message: ", (message) => {
         console.error(`Error pushing files: ${stderr}`);
         rl.close();
         return;
+      } else {
+        // Jika push berhasil, cetak pesan sukses
+        console.log("Files pushed successfully.");
       }
 
-      // Jika push berhasil, cetak pesan sukses
-      console.log("Files pushed successfully.");
       // Tutup antarmuka readline
       rl.close();
     });
