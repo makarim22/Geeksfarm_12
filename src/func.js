@@ -23,6 +23,13 @@ if (!fs.existsSync(dataPath)) {
   // });
 }
 
+//BELUM BERHASIL UNTUK MEMBUAT MENJADI SYNC
+// const question = (questions, callback) => {
+//   rl.question(questions, (input) => {
+//     callback(input);
+//   });
+// };
+
 const question = (questions) => {
   return new Promise((resolve, rejects) => {
     rl.question(questions, (input) => {
