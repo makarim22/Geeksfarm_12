@@ -1,4 +1,5 @@
 const yargs = require("yargs");
+const validator = require("validator");
 
 yargs.command({
   command: "add",
@@ -26,7 +27,25 @@ yargs.command({
       mobile: argv.mobile,
       email: argv.email,
     };
-    console.log(contact);
+
+    let isValid = true;
+    let errorMessage = "";
+
+    if (!validator.isMobilePhone(argv.mobile, "any")) {
+      isValid = false;
+      errorMessage += "Invalid mobile number. ";
+    }
+
+    if (argv.email && !validator.isEmail(argv.email)) {
+      isValid = false;
+      errorMessage += "Invalid email address. ";
+    }
+
+    if (isValid) {
+      console.log(contact);
+    } else {
+      console.log(errorMessage);
+    }
   },
 });
 
