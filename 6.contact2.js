@@ -1,11 +1,9 @@
 const readline = require("readline"); // Import modul 'readline' untuk membaca input dari pengguna
 const validator = require("validator"); // Import modul 'validator' untuk validasi
 const fs = require("fs"); // Import modul 'fs' untuk operasi file
-const { resolve } = require("path");
-const { rejects } = require("assert");
 const dirPath = "./data"; // Menyimpan path direktori data
 const dataPath = "./data/contacts.json"; // Menyimpan path file contacts.json
-
+``;
 // Membuat antarmuka readline untuk membaca input dari stdin dan menulis output ke stdout
 const rl = readline.createInterface({
   input: process.stdin,

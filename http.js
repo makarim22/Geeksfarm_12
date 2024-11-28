@@ -30,6 +30,6 @@ http.createServer((req, res)=>{
         res.write("tidak ada");
         res.end();
     
-}).listen(port, () =>{
+}}).listen(port, () =>{
     console.log(`Server is running on port ${port}`);
 }); 

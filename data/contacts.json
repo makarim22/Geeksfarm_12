@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "name": "Aditya Kunto",
+        "mobile": "081234567890",
+        "email": "aditya.kunto@example.com"
+    },
+    {
+        "name": "Ghibran Kunto",
+        "mobile": "081987654321",
+        "email": "ghibran.k@example.com"
+    },
+    {
+        "name": "Rahma Ayu Andari",
+        "mobile": "085678912345",
+        "email": "rahma.andari@example.com"
+    },
+    {
+        "name": "Syalza Nuraini",
+        "mobile": "089876543210",
+        "email": "syalza.n@example.com"
+    }
+]
