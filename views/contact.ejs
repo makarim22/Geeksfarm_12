@@ -1,0 +1,54 @@
+<%- include('layouts/header')%>
+<%- include('layouts/nav')%>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Mobile</th>
+      <th>Email</th>
+      <th>aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.forEach(task=> { %>
+    <tr>
+      <td> <%= task.name  %></td>
+      <td> <%= task.mobile %> </td>
+      <td> <%= task.email  %></td>
+      <td> 
+        <a href="/edit/<%= task.id %>" class="btn btn-warning btn-sm">edit</a>
+        <form action="/delete/<%= task.id %>" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-danger btn-sm">delete</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+<form action="/add" method="POST" class="mb-3">  
+    <div class="input-group">  
+        <input type="text" name="name" class="form-control" placeholder="Enter a new task" required> 
+        <input type="text" name="email" class="form-control" placeholder="Enter a new email" required>
+        <input type="text" name="mobile" class="form-control" placeholder="Enter a mobile phone" required>    
+        <div class="input-group-append">  
+            <button class="btn btn-primary" type="submit">Add Task</button>  
+        </div>  
+    </div>  
+</form>  
+<tbody>
+  
+</tbody>
+<!-- <ul class="list-group mt-3">  
+    <% tasks.forEach(task => { %>  
+        <li class="list-group-item d-flex justify-content-between align-items-center">  
+            <form action="/update/<%= task.id %>" method="POST" class="form-inline">  
+                <input type="text" name="task" class="form-control mr-2" value="<%= task.name %>" required>  
+                <button type="submit" class="btn btn-warning btn-sm">Update</button>  
+            </form>  
+            <form action="/delete/<%= task.id %>" method="POST" style="display:inline;">  
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>  
+            </form>  
+        </li>  
+    <% }) %>  
+</ul> -->
+<%- include ('layouts/footer') %>
