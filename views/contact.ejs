@@ -3,10 +3,10 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Mobile</th>
+      <th>Nama</th>
+      <th>Nomor Telepon</th>
       <th>Email</th>
-      <th>aksi</th>
+      <th>Aksi</th>
     </tr>
   </thead>
   <tbody>
@@ -16,39 +16,27 @@
       <td> <%= task.mobile %> </td>
       <td> <%= task.email  %></td>
       <td> 
-        <a href="/edit/<%= task.id %>" class="btn btn-warning btn-sm">edit</a>
-        <form action="/delete/<%= task.id %>" method="POST" class="d-inline">
-          <button type="submit" class="btn btn-danger btn-sm">delete</button>
-        </form>
-      </td>
-    </tr>
-  <% }) %>
-  </tbody>
+        <!-- <a href="/edit/<%= tasks.id %>" class="btn btn-warning btn-sm">edit</a> -->
+        <a href="/edit/<%= tasks.id %>" method="POST" class="mb-3">  
+          <!-- <input type="text" name="name" value="<%= tasks.name %>" required>  
+          <input type="text" name="mobile" value="<%= tasks.mobile %>" required>  
+          <input type="email" name="email" value="<%= tasks.email %>" required>   -->
+          <button type="submit">Edit</button>  
+        <a href="/delete/<%= tasks.id%>" method="POST" class="mb-3">  
+          <button type="submit">Delete</button>                  
+          </form>  
+          </td>  
+          </tr>  
+          <% }); %>  
 </table>
 <form action="/add" method="POST" class="mb-3">  
     <div class="input-group">  
-        <input type="text" name="name" class="form-control" placeholder="Enter a new task" required> 
-        <input type="text" name="email" class="form-control" placeholder="Enter a new email" required>
-        <input type="text" name="mobile" class="form-control" placeholder="Enter a mobile phone" required>    
+        <input type="text" name="name" class="form-control" placeholder="masukkan nama" required> 
+        <input type="text" name="email" class="form-control" placeholder="masukkan alamat email" required>
+        <input type="text" name="mobile" class="form-control" placeholder="masukkan nomor telepon" required>    
         <div class="input-group-append">  
             <button class="btn btn-primary" type="submit">Add Task</button>  
         </div>  
     </div>  
 </form>  
-<tbody>
-  
-</tbody>
-<!-- <ul class="list-group mt-3">  
-    <% tasks.forEach(task => { %>  
-        <li class="list-group-item d-flex justify-content-between align-items-center">  
-            <form action="/update/<%= task.id %>" method="POST" class="form-inline">  
-                <input type="text" name="task" class="form-control mr-2" value="<%= task.name %>" required>  
-                <button type="submit" class="btn btn-warning btn-sm">Update</button>  
-            </form>  
-            <form action="/delete/<%= task.id %>" method="POST" style="display:inline;">  
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>  
-            </form>  
-        </li>  
-    <% }) %>  
-</ul> -->
 <%- include ('layouts/footer') %>

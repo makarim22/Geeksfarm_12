@@ -91,37 +91,7 @@ app.get("/contact", (req, res) => {
   // Render the template with the contacts data  
   res.render('contact', { tasks, title: "Contact" });  
   });
-//
-// app.get('/create', (req, res) => {  
-// res.render('create',  {tasks, title: 'Create Task' });  
-// });  
-// //
-// app.post('/create', (req, res) => {  
-//   const newTask = req.body.task;  
-//   tasks.push(newTask);  
-//   res.redirect('/');  
-// });  
-// //
-// // Update (Show form to edit a task)  
-// app.get('/edit/:index', (req, res) => {  
-//   const index = req.params.index;  
-//   const taskToEdit = tasks[index];  
-//   res.render('edit', { title: 'Edit Task', task: taskToEdit, index });  
-// });  
 
-// // Update (Handle form submission)  
-// app.post('/edit/:index', (req, res) => {  
-//   const index = req.params.index;  
-//   tasks[index] = req.body.task;  
-//   res.redirect('/');  
-// });  
-
-// // Delete (Handle delete request)  
-// app.post('/delete/:index', (req, res) => {  
-//   const index = req.params.index;  
-//   tasks.splice(index, 1);  
-//   res.redirect('/');  
-// });  
 app.post('/create', (req, res) => {  
   const tasks = readData() 
   const newtask = {
@@ -132,6 +102,7 @@ app.post('/create', (req, res) => {
   };
   tasks.push(newtask); 
   writeData(tasks); 
+  res.redirect('/contact'); 
   // res.render(/, {tasks}
   res.redirect('/');  
 });  
@@ -145,24 +116,29 @@ app.post('/add', (req, res) => {
   writeData(tasks);  
   res.redirect('contact');  
 });  
-app.get('/update/:id'), (req, res) => {
+app.get('/edit/:id'), (req, res) => {
   const tasks = readData();
   const task = tasks.find((t) => t.id == req.params.id);
-  res.render('edit', {task});
+  if (!task) {  
+    return res.status(404).send("Contact not found");  
+  }  
+  res.render('edit', { task, title: 'Edit Contact' }); 
+//  res.render('edit', {task});
 }
-app.post('/update/:id', (req, res) => {  
+
+// Update a contact (handle form submission)  
+app.post('/edit/:id', (req, res) => {  
   const tasks = readData();  
-  const task = tasks.find((t) => t.id == req.params.id);  
-  // res.render('edit', {task})
-  if (task > -1) {
-      tasks[task] = {  
-      id : tasks[task].id,
-      name : req.body.name,
-      mobile : req.body.mobile,
-      email : req.body.email
-      }; 
-  writeData(tasks); 
-    } 
+  const taskIndex = tasks.findIndex(t => t.id == req.params.id);  
+  if (taskIndex > -1) {  
+      tasks[taskIndex] = {  
+          id: tasks[taskIndex].id,  
+          name: req.body.name,  
+          mobile: req.body.mobile,  
+          email: req.body.email,  
+      };  
+      writeData(tasks);  
+  }  
   res.redirect('/contact');  
 });  
 
@@ -170,12 +146,10 @@ app.post('/delete/:id', (req, res) => {
   let tasks = readData();  
   tasks = tasks.filter((t) => t.id !== req.params.id);  
   writeData(tasks);  
-  res.redirect('/');  
+  res.redirect('/contact');
 });  
 
- // res.render("contact", { contact }); // Pass the contact variable to the template  
-//});
-// Define a middleware to handle 404 errors (page not found)
+
 app.use((req, res) => {
   res.status(404).send("404 : Page not found Broo!"); // Send a 404 response when no route matches the request
 });
@@ -184,4 +158,3 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`); // Log a message indicating that the server is running
 });
-// In this snippet, we have created a basic Express server that listens on port 3000 and responds with "Hello World!" when a GET request is made to the root URL ("/"). This is a simple example of how to create a server using Express and handle requests.
