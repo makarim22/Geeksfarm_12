@@ -1,42 +1,46 @@
-<%- include('layouts/header')%>
-<%- include('layouts/nav')%>
-<table>
-  <thead>
-    <tr>
-      <th>Nama</th>
-      <th>Nomor Telepon</th>
-      <th>Email</th>
-      <th>Aksi</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% tasks.forEach(task=> { %>
-    <tr>
-      <td> <%= task.name  %></td>
-      <td> <%= task.mobile %> </td>
-      <td> <%= task.email  %></td>
-      <td> 
-        <!-- <a href="/edit/<%= tasks.id %>" class="btn btn-warning btn-sm">edit</a> -->
-        <a href="/edit/<%= tasks.id %>" method="POST" class="mb-3">  
-          <!-- <input type="text" name="name" value="<%= tasks.name %>" required>  
-          <input type="text" name="mobile" value="<%= tasks.mobile %>" required>  
-          <input type="email" name="email" value="<%= tasks.email %>" required>   -->
-          <button type="submit">Edit</button>  
-        <a href="/delete/<%= tasks.id%>" method="POST" class="mb-3">  
-          <button type="submit">Delete</button>                  
-          </form>  
-          </td>  
-          </tr>  
-          <% }); %>  
-</table>
-<form action="/add" method="POST" class="mb-3">  
-    <div class="input-group">  
-        <input type="text" name="name" class="form-control" placeholder="masukkan nama" required> 
-        <input type="text" name="email" class="form-control" placeholder="masukkan alamat email" required>
-        <input type="text" name="mobile" class="form-control" placeholder="masukkan nomor telepon" required>    
-        <div class="input-group-append">  
-            <button class="btn btn-primary" type="submit">Add Task</button>  
+<%- include('layouts/header') %>  
+
+<div class="container mt-4">  
+    <h2>Contact List</h2>  
+    <table class="table table-striped">  
+        <thead class="thead-dark">  
+            <tr>  
+                <th>Nama</th>  
+                <th>Nomor Telepon</th>  
+                <th>Email</th>  
+                <th>Aksi</th>  
+            </tr>  
+        </thead>  
+        <tbody>  
+            <% tasks.forEach(task => { %>  
+            <tr>  
+                <td><%= task.name %></td>  
+                <td><%= task.mobile %></td>  
+                <td><%= task.email %></td>  
+                <td>  
+                    <!-- Link to the edit page -->  
+                    <a href="/edit/<%= task.id %>" class="btn btn-warning">Edit</a>  
+
+                    <!-- Delete Form -->  
+                    <form action="/delete/<%= task.id %>" method="POST" class="d-inline">  
+                        <button type="submit" class="btn btn-danger">Delete</button>  
+                    </form>  
+                </td>  
+            </tr>  
+            <% }); %>  
+        </tbody>  
+    </table>  
+    <h3 class="mt-4">Add New Contact</h3>  
+    <form action="/add" method="POST" class="mb-3">  
+        <div class="input-group">  
+            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>   
+            <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
+            <input type="email" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
+            <div class="input-group-append">  
+                <button class="btn btn-primary" type="submit">Add</button>  
+            </div>  
         </div>  
-    </div>  
-</form>  
-<%- include ('layouts/footer') %>
+    </form>  
+</div>  
+<%- include('layouts/footer') %>  
+

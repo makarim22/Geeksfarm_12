@@ -30,82 +30,34 @@ app.use(ejsLayouts);
 // atur file layout detail
 app.set("layout", "layouts/layout")
 app.use(express.static(path.join(__dirname, "public")));
-
-
-// app.use(express.static('public'));  
-// app.set('view engine', 'ejs');  
-
-// In-memory data store  
-// let task = [];  
-// Load data from JSON file  
-// const loadData = () => {  
-//   const data = fs.readFileSync(path.join(__dirname, 'contacts.json'));  
-//   return JSON.parse(data);  
-// };  
 const datafile = path.join(__dirname, "data", "contacts.json");
 const readData = () => JSON.parse(fs.readFileSync(datafile));
 const writeData= (data) => fs.writeFileSync(datafile, JSON. stringify(data, null, 2));
-// save data to JSON file
-// const saveData = (data) => {  
-//   fs.writeFileSync(path.join(__dirname, 'data.json'), JSON.stringify(data, null, 2));  
-// };  
-
+function getTasks() {  
+    const dataPath = path.join(__dirname, '/data/contacts.json'); // Adjust the path as needed  
+    const data = fs.readFileSync(dataPath);  
+    return JSON.parse(data);  
+}  
 app.use((req, res, next)=>{
   console.log("Time:", Date.now());
   next();
 });
 app.get("/", (req, res) => {
-  //res.send("<h1>Hello World!</h1>"); // Send a response with "Hello World!" when the root URL is accessed
-  //res.sendFile(__dirname + "/views/index.html");
-  // const nama = "jack";
-  // const user = readData();
   res.render("index", { title:"home"});
 });
 
 // Define a route for the "/about" URL
 app.get("/about", (req, res) => {
-  //res.send("About Us"); // Send a response with "About Us" when the "/about" URL is accessed
-  //res.sendFile(__dirname + "/views/about.html");
   res.render("about", {title: 'about page'});
 });
 
-// Define a route for the "/contact" URL
-//app.get("/contact", (req, res) => {
-  //res.send("Contact Us"); // Send a response with "Contact Us" when the "/contact" URL is accessed
-  //res.sendFile(__dirname + "/views/contact.html");
-  //const contact = {  
-    //name: 'John Doe',  
-    //email: 'john.doe@example.com',  
-    //phone: '123-456-7890'  
-  //};  
-  //res.render("contact");
-//};
 app.get("/contact", (req, res) => {  
-  //const contact = [  
-  //  { name: 'Jack', email: 'jackma@gmail.com', phone: '08152987665' },  
-  //{ name: 'Syukri', email: 'syukri@gmail.com', phone: '081398899003' },  
-  // { name: 'Ayyas', email: 'ayyas@gmail.com', phone: '081804789553' }  
-  //];  
-  // Load the JSON file  
   const tasks = readData();
+  console.log(tasks)
   // Render the template with the contacts data  
   res.render('contact', { tasks, title: "Contact" });  
   });
 
-app.post('/create', (req, res) => {  
-  const tasks = readData() 
-  const newtask = {
-   id : tasks.length ? tasks[tasks.length -1].id + 1 :1,
-   name : req.body.name,
-   mobile :  req.body.mobile,
-   email : req.body.email,
-  };
-  tasks.push(newtask); 
-  writeData(tasks); 
-  res.redirect('/contact'); 
-  // res.render(/, {tasks}
-  res.redirect('/');  
-});  
 app.post('/add', (req, res) => {  
   const tasks = readData();  
   tasks.push({ id: Date.now(), 
@@ -115,16 +67,17 @@ app.post('/add', (req, res) => {
     });   
   writeData(tasks);  
   res.redirect('contact');  
-});  
-app.get('/edit/:id'), (req, res) => {
+}); 
+
+app.get("/edit/:id", (req, res) => {
+  console.log(1);
   const tasks = readData();
   const task = tasks.find((t) => t.id == req.params.id);
   if (!task) {  
     return res.status(404).send("Contact not found");  
   }  
   res.render('edit', { task, title: 'Edit Contact' }); 
-//  res.render('edit', {task});
-}
+});
 
 // Update a contact (handle form submission)  
 app.post('/edit/:id', (req, res) => {  
@@ -141,18 +94,58 @@ app.post('/edit/:id', (req, res) => {
   }  
   res.redirect('/contact');  
 });  
+// app.post('/register', [  
+//   // Validate and sanitize fields  
+//   body('name')  
+//       .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')  
+//       .isAlphanumeric().withMessage('Username must be alphanumeric'),  
+//   body('email')  
+//       .isEmail().withMessage('Must be a valid email address')  
+//       .normalizeEmail(),  
+//   body('mobile')  
+//       .isMobilePhone('any').withMessage('Must be a valid mobile phone number'), // Validate mobile phone  
+// ], (req, res) => {  
+//   // Handle validation errors  
+//   const errors = validationResult(req);  
+//   if (!errors.isEmpty()) {  
+//       return res.status(400).json({ errors: errors.array() });  
+//   }  
 
+//   // If validation passes, proceed with user registration logic  
+//   const { username, email, password } = req.body;  
+//   // Here you would typically save the user to the database  
+//   res.status(201).json({ message: 'User registered successfully', user: { username, email } });  
+// });
+
+
+// Function to get tasks from a JSON file  
+// Function to delete a task by ID  
+function deleteTask(taskId) {  
+    // Get the current list of tasks  
+    let tasks = getTasks();  
+
+    // Filter out the task with the specified ID  
+    tasks = tasks.filter((task) => task.id !== taskId);  
+
+    // Write the updated tasks back to the data source  
+    writeData(tasks);  
+}  
+
+// Route to delete a task  
 app.post('/delete/:id', (req, res) => {  
-  let tasks = readData();  
-  tasks = tasks.filter((t) => t.id !== req.params.id);  
-  writeData(tasks);  
-  res.redirect('/contact');
+    // Retrieve the ID of the task to delete  
+    const taskIdToDelete = req.params.id;  
+
+    // Call the deleteTask function  
+    deleteTask(taskIdToDelete);  
+
+    // Redirect to the contact page or wherever you want  
+    res.redirect('/contact'); // Uncomment this line to enable redirection  
 });  
 
-
-app.use((req, res) => {
-  res.status(404).send("404 : Page not found Broo!"); // Send a 404 response when no route matches the request
-});
+// app.use((req, res) => {
+//   res.status(404).send("404 : Page not found Broo!"); // Send a 404 response when no route matches the request
+// });
 
 // Start the server and listen on the specified port
 app.listen(port, () => {

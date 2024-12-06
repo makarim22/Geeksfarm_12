@@ -1,0 +1,27 @@
+<%- include('layouts/header') %>  
+<%- include('layouts/nav') %>  
+
+<div class="container mt-4">  
+    <h3>Add New Contact</h3>  
+    <% if (errors && errors.length > 0) { %>  
+        <div class="alert alert-danger">  
+            <ul>  
+                <% errors.forEach(error => { %>  
+                    <li><%= error.msg %></li>  
+                <% }); %>  
+            </ul>  
+        </div>  
+    <% } %>  
+    <form action="/add" method="POST" class="mb-3">  
+        <div class="input-group">  
+            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>   
+            <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
+            <input type="email" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
+            <div class="input-group-append">  
+                <button class="btn btn-primary" type="submit">Add Task</button>  
+            </div>  
+        </div>  
+    </form>  
+</div>  
+
+<%- include('layouts/footer') %>

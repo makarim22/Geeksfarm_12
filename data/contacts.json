@@ -1,79 +1,14 @@
 [
   {
-    "name": "Aditya Kunto",
-    "mobile": "081234567890",
-    "email": "aditya.kunto@example.com"
-  },
-  {
-    "name": "Ghibran Kunto",
-    "mobile": "081987654321",
-    "email": "ghibran.k@example.com"
-  },
-  {
-    "name": "Rahma Ayu Andari",
-    "mobile": "085678912345",
-    "email": "rahma.andari@example.com"
-  },
-  {
-    "name": "Syalza Nuraini",
-    "mobile": "089876543210",
-    "email": "syalza.n@example.com"
-  },
-  {
-    "id": 1733288143052,
-    "name": "jaka"
-  },
-  {
-    "id": 1733288271520,
-    "name": "jack"
-  },
-  {
-    "id": 1733288767972,
-    "name": "jakam",
-    "email": "jakam",
-    "mobile": "jakam"
-  },
-  {
-    "id": 1733288877219,
-    "mobile": "jakamakarim@gmail.com"
-  },
-  {
-    "id": 1733288990375,
-    "email": "makarim.muhammad@office.ui.ac.id"
-  },
-  {
-    "id": 1733289090924,
-    "name": "joko",
+    "id": "1733489575085",
+    "name": "Jaka",
     "mobile": "081529939012",
     "email": "jakamakarim@gmail.com"
   },
   {
-    "id": 1733289175239,
-    "name": "kael",
-    "mobile": "msdmls",
-    "email": "kael@gmail"
-  },
-  {
-    "id": 1733366956584,
-    "name": "kkk",
-    "mobile": "lslmle",
-    "email": "slsl"
-  },
-  {
-    "id": 1733366965449,
-    "name": "dd,",
-    "mobile": "s,s",
-    "email": ",dl"
-  },
-  {
-    "name": "ssms",
-    "mobile": "s,s,",
-    "email": "msms"
-  },
-  {
-    "id": 1733370986496,
-    "name": "syifa",
-    "mobile": "082928394",
-    "email": "syifa@gmail.com"
+    "id": "1733489981581",
+    "name": "Asa",
+    "mobile": "081529939000",
+    "email": "Asalina@gmail.com"
   }
 ]
