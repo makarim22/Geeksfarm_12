@@ -31,11 +31,21 @@
         </tbody>  
     </table>  
     <h3 class="mt-4">Add New Contact</h3>  
+     <!-- Display validation errors -->  
+     <% if (errors && errors.length > 0) { %>  
+      <div style="color: red;">  
+          <ul>  
+              <% errors.forEach(error => { %>  
+                  <li><%= error.msg %></li>  
+              <% }); %>  
+          </ul>  
+      </div>  
+  <% } %>  
     <form action="/add" method="POST" class="mb-3">  
         <div class="input-group">  
             <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>   
             <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
-            <input type="email" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
+            <input type="text" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
             <div class="input-group-append">  
                 <button class="btn btn-primary" type="submit">Add</button>  
             </div>  

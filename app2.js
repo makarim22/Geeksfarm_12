@@ -58,24 +58,186 @@ app.get("/about", (req, res) => {
 });  
 
 // Contact route  
-app.get("/contact", (req, res) => {  
-    const tasks = readData();  
-    res.render('contact', { tasks, title: "Contact" });  
-});  
-
+// app.get("/contact", (req, res) => {  
+//     const tasks = readData();  
+//     res.render('contact', { tasks, title: "Contact" });  
+// });  
+app.get('/contact', (req, res) => {  
+    const tasks = readData(); // Get existing contacts  
+    res.render('contact', {  
+        tasks, // Pass existing contacts  
+        errors: [], // Initialize errors as an empty array  
+        title: 'Contact List' // Pass the title variable  
+    });  
+});
+// Validation rules  
+// const validationRules = [  
+//     body('name')  
+//         .isString().withMessage('Name must be a string')  
+//         .isLength({ min: 3}).withMessage('Name cannot be empty')
+//         .matches(/^[A-Za-z\s]+$/).withMessage('Name must contain only letters and spaces')  
+//     body('email')  
+//         .isEmail().withMessage('Must be a valid email address'),  
+//     body('mobile')  
+//         .isMobilePhone('any').withMessage('Must be a valid mobile phone number'),  
+// ]; 
+//
+const validationRules = [  
+    body('name')  
+        .isString().withMessage('Name must be a string')  
+        .isLength({ min: 3 }).withMessage('Name must be at least 3 characters long')  
+        .matches(/^[A-Za-z\s]+$/).withMessage('Name must contain only letters and spaces'), // Regex to allow only letters and spaces   
+    body('mobile')  
+        .custom(value => {  
+        // Regex to validate Indonesian mobile phone numbers  
+        const regex = /^(?:\+62|0)(\d{8,13})$/;  
+        if (!regex.test(value)) {  
+            throw new Error('Must be a valid Indonesian mobile phone number');  
+        }  
+        return true; // If validation passes  
+    }),
+    body('email')  
+        .isEmail().withMessage('Must be a valid email address')
+];  
 //Add a new contact  
-app.post('/add', (req, res) => {  
+// app.post('/add', (req, res) => {  
+//     const tasks = readData();  
+//     tasks.push({   
+//         id: Date.now().toString(), // Ensure ID is a string  
+//         name: req.body.name,   
+//         mobile: req.body.mobile,  
+//         email: req.body.email  
+//     });   
+//     writeData(tasks);  
+//     res.redirect('/contact');  
+// });   
+
+// Route to handle form submission  
+// app.post('/add', validationRules, (req, res) => {  
+//     const errors = validationResult(req);  
+//     if (!errors.isEmpty()) {  
+//         return res.status(400).json({ errors: errors.array() });  
+//     }  
+
+//     // If validation passes, handle the request  
+//     res.send('Validation passed and data received!');  
+// });  
+
+///
+// app.post('/add', validationRules, (req, res) => {  
+//     const errors = validationResult(req);  
+//     if (!errors.isEmpty()) {  
+//         return res.status(400).json({ errors: errors.array() });  
+//     }  
+
+//     // If validation passes, proceed to add the contact  
+//     const tasks = readData();  
+//     tasks.push({  
+//         id: Date.now().toString(), // Ensure ID is a string  
+//         name: req.body.name,  
+//         mobile: req.body.mobile,  
+//         email: req.body.email  
+//     });  
+//     writeData(tasks);  
+    
+//     // Redirect or send a success response  
+//     res.redirect('/contact'); // Or use res.status(201).json({ message: 'Contact added successfully!' });  
+// });  
+///
+// app.post('/add', validationRules, (req, res) => {  
+//     const errors = validationResult(req);  
+//     if (!errors.isEmpty()) {  
+//         // Render the contact view with errors and the submitted data  
+//         return res.render('contact', {  
+//             tasks: readData(), // Pass existing contacts  
+//             errors: errors.array(), // Pass validation errors  
+//             formData: req.body // Pass the submitted form data  
+//         });  
+//     }  
+
+//     // If validation passes, proceed to add the contact  
+//     const tasks = readData();  
+//     tasks.push({  
+//         id: Date.now().toString(), // Ensure ID is a string  
+//         name: req.body.name,  
+//         mobile: req.body.mobile,  
+//         email: req.body.email  
+//     });  
+//     writeData(tasks);  
+    
+//     // Redirect to the contact page  
+//     res.redirect('/contact');  
+// });
+///
+// app.post('/add', validationRules, (req, res) => {  
+//     const errors = validationResult(req);  
+//     if (!errors.isEmpty()) {  
+//         // Render the contact view with errors and the submitted data  
+//         return res.render('contact', {  
+//             tasks: readData(), // Pass existing contacts  
+//             errors: errors.array(), // Pass validation errors  
+//             formData: req.body, // Pass the submitted form data  
+//             title: 'Contact List' // Pass the title variable  
+//         });  
+//     }  
+
+//     // If validation passes, proceed to add the contact  
+//     const tasks = readData();  
+//     tasks.push({  
+//         id: Date.now().toString(), // Ensure ID is a string  
+//         name: req.body.name,  
+//         mobile: req.body.mobile,  
+//         email: req.body.email  
+//     });  
+//     writeData(tasks);  
+    
+//     // Redirect to the contact page  
+//     res.redirect('/contact');  
+// }); 
+
+///
+app.post('/add', validationRules, (req, res) => {  
+    const errors = validationResult(req);  
+    if (!errors.isEmpty()) {  
+        return res.render('contact', {  
+            tasks: readData(),  
+            errors: errors.array(),  
+            formData: req.body,  
+            title: 'Contact List'  
+        });  
+    }  
+
+    // Read existing contacts  
     const tasks = readData();  
-    tasks.push({   
-        id: Date.now().toString(), // Ensure ID is a string  
-        name: req.body.name,   
+
+    // Check for duplicates  
+    const duplicate = tasks.find(task =>   
+        task.email === req.body.email ||   
+        task.mobile === req.body.mobile  
+    );  
+
+    if (duplicate) {  
+        return res.render('contact', {  
+            tasks,  
+            errors: [{ msg: 'A contact with this email or mobile number already exists.' }],  
+            formData: req.body,  
+            title: 'Contact List'  
+        });  
+    }  
+
+    // If validation passes and no duplicates, proceed to add the contact  
+    tasks.push({  
+        id: Date.now().toString(),  
+        name: req.body.name,  
         mobile: req.body.mobile,  
         email: req.body.email  
-    });   
+    });  
     writeData(tasks);  
+    
     res.redirect('/contact');  
-});   
-// /// new with validator
+});
+///
+/// new with validator
 // app.post('/add', [  
 //     body('name')  
 //         .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')  
