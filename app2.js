@@ -58,10 +58,7 @@ app.get("/about", (req, res) => {
 });  
 
 // Contact route  
-// app.get("/contact", (req, res) => {  
-//     const tasks = readData();  
-//     res.render('contact', { tasks, title: "Contact" });  
-// });  
+
 app.get('/contact', (req, res) => {  
     const tasks = readData(); // Get existing contacts  
     res.render('contact', {  
@@ -70,18 +67,7 @@ app.get('/contact', (req, res) => {
         title: 'Contact List' // Pass the title variable  
     });  
 });
-// Validation rules  
-// const validationRules = [  
-//     body('name')  
-//         .isString().withMessage('Name must be a string')  
-//         .isLength({ min: 3}).withMessage('Name cannot be empty')
-//         .matches(/^[A-Za-z\s]+$/).withMessage('Name must contain only letters and spaces')  
-//     body('email')  
-//         .isEmail().withMessage('Must be a valid email address'),  
-//     body('mobile')  
-//         .isMobilePhone('any').withMessage('Must be a valid mobile phone number'),  
-// ]; 
-//
+
 const validationRules = [  
     body('name')  
         .isString().withMessage('Name must be a string')  
@@ -99,101 +85,7 @@ const validationRules = [
     body('email')  
         .isEmail().withMessage('Must be a valid email address')
 ];  
-//Add a new contact  
-// app.post('/add', (req, res) => {  
-//     const tasks = readData();  
-//     tasks.push({   
-//         id: Date.now().toString(), // Ensure ID is a string  
-//         name: req.body.name,   
-//         mobile: req.body.mobile,  
-//         email: req.body.email  
-//     });   
-//     writeData(tasks);  
-//     res.redirect('/contact');  
-// });   
 
-// Route to handle form submission  
-// app.post('/add', validationRules, (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         return res.status(400).json({ errors: errors.array() });  
-//     }  
-
-//     // If validation passes, handle the request  
-//     res.send('Validation passed and data received!');  
-// });  
-
-///
-// app.post('/add', validationRules, (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         return res.status(400).json({ errors: errors.array() });  
-//     }  
-
-//     // If validation passes, proceed to add the contact  
-//     const tasks = readData();  
-//     tasks.push({  
-//         id: Date.now().toString(), // Ensure ID is a string  
-//         name: req.body.name,  
-//         mobile: req.body.mobile,  
-//         email: req.body.email  
-//     });  
-//     writeData(tasks);  
-    
-//     // Redirect or send a success response  
-//     res.redirect('/contact'); // Or use res.status(201).json({ message: 'Contact added successfully!' });  
-// });  
-///
-// app.post('/add', validationRules, (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         // Render the contact view with errors and the submitted data  
-//         return res.render('contact', {  
-//             tasks: readData(), // Pass existing contacts  
-//             errors: errors.array(), // Pass validation errors  
-//             formData: req.body // Pass the submitted form data  
-//         });  
-//     }  
-
-//     // If validation passes, proceed to add the contact  
-//     const tasks = readData();  
-//     tasks.push({  
-//         id: Date.now().toString(), // Ensure ID is a string  
-//         name: req.body.name,  
-//         mobile: req.body.mobile,  
-//         email: req.body.email  
-//     });  
-//     writeData(tasks);  
-    
-//     // Redirect to the contact page  
-//     res.redirect('/contact');  
-// });
-///
-// app.post('/add', validationRules, (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         // Render the contact view with errors and the submitted data  
-//         return res.render('contact', {  
-//             tasks: readData(), // Pass existing contacts  
-//             errors: errors.array(), // Pass validation errors  
-//             formData: req.body, // Pass the submitted form data  
-//             title: 'Contact List' // Pass the title variable  
-//         });  
-//     }  
-
-//     // If validation passes, proceed to add the contact  
-//     const tasks = readData();  
-//     tasks.push({  
-//         id: Date.now().toString(), // Ensure ID is a string  
-//         name: req.body.name,  
-//         mobile: req.body.mobile,  
-//         email: req.body.email  
-//     });  
-//     writeData(tasks);  
-    
-//     // Redirect to the contact page  
-//     res.redirect('/contact');  
-// }); 
 
 ///
 app.post('/add', validationRules, (req, res) => {  
@@ -236,33 +128,6 @@ app.post('/add', validationRules, (req, res) => {
     
     res.redirect('/contact');  
 });
-///
-/// new with validator
-// app.post('/add', [  
-//     body('name')  
-//         .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')  
-//         .isAlphanumeric().withMessage('Username must be alphanumeric'),  
-//     body('mobile')  
-//         .isMobilePhone('any').withMessage('Must be a valid mobile phone number'),  
-//     body('email')  
-//         .isEmail().withMessage('Must be a valid email address')  
-//         .normalizeEmail(),  
-// ], (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         return res.render('add', { errors: errors.array() }); // Render the add form with errors  
-//     }  
-
-//     const tasks = readData();  
-//     tasks.push({  
-//         id: Date.now().toString(),  
-//         name: req.body.name,  
-//         mobile: req.body.mobile,  
-//         email: req.body.email,  
-//     });  
-//     writeData(tasks);  
-//     res.redirect('/contact');  
-// });  
 
 ///
 //Route to display the edit form  
@@ -300,80 +165,6 @@ app.post('/edit/:id', (req, res) => {
     }  
     res.redirect('/contact');  
 });
-
-/// new edit with validation
-// // Update a contact with validation  
-// app.post('/edit/:id', [  
-//     body('name')  
-//         .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')  
-//         .isAlphanumeric().withMessage('Username must be alphanumeric'),  
-//     body('mobile')  
-//         .isMobilePhone('any').withMessage('Must be a valid mobile phone number'),  
-//     body('email')  
-//         .isEmail().withMessage('Must be a valid email address')  
-//         .normalizeEmail(),  
-// ], (req, res) => {  
-//     const errors = validationResult(req);  
-//     if (!errors.isEmpty()) {  
-//         const task = readData().find(t => t.id === req.params.id);  
-//         return res.render('edit', { task, errors: errors.array() }); // Render the edit form with errors  
-//     }  
-//     const tasks = readData();  
-//     const taskIndex = tasks.findIndex(t => t.id === req.params.id);  
-//     if (taskIndex > -1) {  
-//         tasks[taskIndex] = {  
-//             id: tasks[taskIndex].id,  
-//             name: req.body.name,  
-//             mobile: req.body.mobile,  
-//             email: req.body.email,  
-//         };  
-//         writeData(tasks);  
-//     }  
-//     res.redirect('/contact');  
-// });  
-
-  
-  // Update a contact (handle form submission)  
-//   app.post('/edit/:id', (req, res) => {  
-//     const tasks = readData();  
-//     const taskIndex = tasks.findIndex(t => t.id == req.params.id);  
-//     if (taskIndex > -1) {  
-//         tasks[taskIndex] = {  
-//             id: tasks[taskIndex].id,  
-//             name: req.body.name,  
-//             mobile: req.body.mobile,  
-//             email: req.body.email,  
-//         };  
-//         writeData(tasks);  
-//     }  
-//     res.redirect('/contact');  
-//   });  
-// // Edit a contact  
-// app.get("/edit/:id", (req, res) => {  
-//     const tasks = readData();  
-//     const task = tasks.find((t) => t.id === req.params.id); // Compare as strings  
-//     if (!task) {  
-//         return res.status(404).send("Contact not found");  
-//     }  
-//     res.render('edit', { task, title: 'Edit Contact' });   
-// });  
-
-// // Update a contact (handle form submission)  
-// app.post('/edit/:id', (req, res) => {  
-//     const tasks = readData();  
-//     const taskIndex = tasks.findIndex(t => t.id === req.params.id); // Compare as strings  
-//     if (taskIndex > -1) {  
-//         tasks[taskIndex] = {  
-//             id: tasks[taskIndex].id,  
-//             name: req.body.name,  
-//             mobile: req.body.mobile,  
-//             email: req.body.email,  
-//         };  
-//         writeData(tasks);  
-//     }  
-//     res.redirect('/contact');  
-// });  
-
 
 // Function to delete a task by ID  
 function deleteTask(taskId) {  

@@ -19,11 +19,14 @@
                 <td><%= task.email %></td>  
                 <td>  
                     <!-- Link to the edit page -->  
-                    <a href="/edit/<%= task.id %>" class="btn btn-warning">Edit</a>  
+                    <a href="/edit/<%= task.id %>" class="btn btn-warning">
+                      <i class="bi bi-pencil-square"></i></a>  
 
                     <!-- Delete Form -->  
                     <form action="/delete/<%= task.id %>" method="POST" class="d-inline">  
-                        <button type="submit" class="btn btn-danger">Delete</button>  
+                        <button type="submit" class="btn btn-danger">
+                          <i class="bi bi-x-circle"></i>
+                          </button>  
                     </form>  
                 </td>  
             </tr>  
@@ -43,11 +46,13 @@
   <% } %>  
     <form action="/add" method="POST" class="mb-3">  
         <div class="input-group">  
-            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>   
+            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>  
             <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
             <input type="text" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
             <div class="input-group-append">  
-                <button class="btn btn-primary" type="submit">Add</button>  
+                <button class="btn btn-primary" type="submit">
+                  <i class="bi bi-person-add"></i>
+                  </button>  
             </div>  
         </div>  
     </form>  
