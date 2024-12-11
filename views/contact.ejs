@@ -1,7 +1,30 @@
 <%- include('layouts/header') %>  
 
-<div class="container mt-4">  
-    <h2>Contact List</h2>  
+<div class="container mt-4">
+    <h3 class="mt-4">Tambahkan Kontak</h3>  
+     <!-- Display validation errors -->  
+     <% if (errors && errors.length > 0) { %>  
+      <div style="color: red;">  
+          <ul>  
+              <% errors.forEach(error => { %>  
+                  <li><%= error.msg %></li>  
+              <% }); %>  
+          </ul>  
+      </div>  
+  <% } %>  
+    <form action="/add" method="POST" class="mb-3">  
+        <div class="input-group">  
+            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>  
+            <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
+            <input type="text" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
+            <div class="input-group-append">  
+                <button class="btn btn-primary" type="submit">
+                  <i class="bi bi-person-add"></i>
+                  </button>  
+            </div>  
+        </div>  
+    </form>    
+    <h3>Daftar Kontak</h3>  
     <table class="table table-striped">  
         <thead class="thead-dark">  
             <tr>  
@@ -33,29 +56,7 @@
             <% }); %>  
         </tbody>  
     </table>  
-    <h3 class="mt-4">Add New Contact</h3>  
-     <!-- Display validation errors -->  
-     <% if (errors && errors.length > 0) { %>  
-      <div style="color: red;">  
-          <ul>  
-              <% errors.forEach(error => { %>  
-                  <li><%= error.msg %></li>  
-              <% }); %>  
-          </ul>  
-      </div>  
-  <% } %>  
-    <form action="/add" method="POST" class="mb-3">  
-        <div class="input-group">  
-            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>  
-            <input type="text" name="mobile" class="form-control" placeholder="Masukkan nomor telepon" required>    
-            <input type="text" name="email" class="form-control" placeholder="Masukkan alamat email" required>    
-            <div class="input-group-append">  
-                <button class="btn btn-primary" type="submit">
-                  <i class="bi bi-person-add"></i>
-                  </button>  
-            </div>  
-        </div>  
-    </form>  
+    
 </div>  
 <%- include('layouts/footer') %>  
 
