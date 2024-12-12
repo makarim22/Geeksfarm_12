@@ -4,7 +4,7 @@
     <h3 class="mt-4">Tambahkan Kontak</h3>  
      <!-- Display validation errors -->  
      <% if (errors && errors.length > 0) { %>  
-      <div style="color: red;">  
+      <div class="alert alert-danger">  
           <ul>  
               <% errors.forEach(error => { %>  
                   <li><%= error.msg %></li>  

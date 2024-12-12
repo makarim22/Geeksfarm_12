@@ -57,10 +57,10 @@ app.get('/contact', async (req, res) => {
 const validationRules = [  
     body('name')  
         .isString().withMessage('Nama harus berupa huruf')  
-        .isLength({ min: 3 }).withMessage('tidak boleh inisial, minimal 3 huruf')  
+        .isLength({ min: 3 }).withMessage('nama tidak boleh inisial, minimal 3 huruf')  
         .matches(/^[A-Za-z\s]+$/).withMessage('nama tidak boleh mengandung angka atau simbol'),  
     body('mobile')
-        .isMobilePhone('id-ID').withMessage('nomor telepon salah')  
+        .isMobilePhone('id-ID').withMessage('format nomor telepon salah')  
         ,  
     body('email')  
         .isEmail().withMessage('format alamat email tidak sesuai')  
